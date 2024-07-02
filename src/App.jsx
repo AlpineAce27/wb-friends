@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 export default function App() {
+  
   const [friends, setFriends] = useState([])
   const [picture, setPicture] = useState('')
   const [name, setName] = useState('')
@@ -13,12 +14,12 @@ export default function App() {
 
   useEffect(() => {
     getSavedFriends()
-  }, [])
+  }, []) //you have to add the empty array at the end so it only runs once, not infinitely
 
 const addFriend = () => {
-  console.log('add friend triggered: ' + name + " : " + picture)
+  //console.log('add friend triggered: ' + name + " : " + picture)
   //add a new friend object the the friends array
-  const newFriends = [...friends ]
+  const newFriends = [...friends]
   newFriends.push({ picture : picture, name: name})
   setFriends(newFriends)
   //reset the fields 
@@ -27,7 +28,8 @@ const addFriend = () => {
 }
 
 const friendInfo = friends.map((friend) => {
-  return (<div key={friend.name}>
+  return (
+  <div key={friend.name}>
     <img src={friend.picture} alt="friends picture" />
     <span>{friend.name}</span>
   </div>)
@@ -42,6 +44,7 @@ const friendInfo = friends.map((friend) => {
       <label for="friend-name">Friend Name: </label>
       <input type="text" name="friend-name" id="friend-name" value={name} onChange={(e) => setName(e.target.value)}/> <br />
       <button type="button" onClick={addFriend}>Add Friend</button>
+      <br />
       {friendInfo}
     </div>)
 }
